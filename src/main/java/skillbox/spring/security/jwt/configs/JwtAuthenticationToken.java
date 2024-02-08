@@ -2,18 +2,17 @@ package skillbox.spring.security.jwt.configs;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-    private final UserDetails principal;
     private final String token;
+    private final String username;
 
-    public JwtAuthenticationToken(UserDetails principal, String token, Collection<? extends GrantedAuthority> authorities) {
+    public JwtAuthenticationToken(String username, String token, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.principal = principal;
+        this.username = username;
         this.token = token;
     }
 
@@ -25,6 +24,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return principal;
+        return username;
     }
 }
