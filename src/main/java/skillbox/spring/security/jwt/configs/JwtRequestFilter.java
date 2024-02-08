@@ -51,16 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 log.debug("Подпись неправильная");
             }
         }
-
-        /*if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    jwtTokenUtils.getRoles(jwt).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
-            );
-            SecurityContextHolder.getContext().setAuthentication(token);
-        }*/
-
+        
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtTokenUtils.validateToken(jwt, userDetails)) {
@@ -69,6 +60,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         .collect(Collectors.toList());
 
                 JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(userDetails, jwt, authorities);
+                authenticationToken.setAuthenticated(true); // обязательно установить
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }

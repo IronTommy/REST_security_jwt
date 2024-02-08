@@ -27,13 +27,13 @@ public class SecurityConfig {
     private UserService userService;
 
     @Autowired
-    @Lazy
+    @Lazy // помогает избавиться от циклической зависимости
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
     @Autowired
-    @Lazy
+    @Lazy // помогает избавиться от циклической зависимости
     public void setJwtRequestFilter(JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }

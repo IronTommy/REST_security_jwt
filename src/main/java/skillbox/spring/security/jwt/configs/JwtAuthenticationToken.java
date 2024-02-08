@@ -17,6 +17,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         this.token = token;
     }
 
+
     @Override
     public Object getCredentials() {
         return token;
